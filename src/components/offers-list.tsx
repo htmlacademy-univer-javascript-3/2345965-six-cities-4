@@ -1,23 +1,26 @@
+import { memo } from 'react';
 import { useAppSelector } from '../hooks';
 import { Offer } from '../types/offer';
-import { PointLocation } from '../types/point-location';
 import { sortOffers } from '../utils';
 import Card from './card';
+import { getSelectedSortType } from '../store';
 
 type OffersListProps = {
   offers: Offer[];
-  onMouseOver: (point: PointLocation | null) => void;
+  onMouseOver: (point: Offer | null) => void;
 };
 
-function OffersList({offers, onMouseOver: handlePointLocationChange}: OffersListProps): JSX.Element {
-  const selectedSortType = useAppSelector((state) => state.selectedSortType);
+function OffersList({offers, onMouseOver}: OffersListProps): JSX.Element {
+  const selectedSortType = useAppSelector(getSelectedSortType);
   return (
     <div className="cities__places-list places__list tabs__content">
       {sortOffers(offers, selectedSortType).map((offer) => (
-        <Card key={offer.id} offer={offer} onMouseOver={handlePointLocationChange} />
+        <Card key={offer.id} offer={offer} onMouseOver={onMouseOver} />
       ))}
     </div>
   );
 }
 
-export default OffersList;
+const memoizedOffersList = memo(OffersList);
+
+export default memoizedOffersList;
