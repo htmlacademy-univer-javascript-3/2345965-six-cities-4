@@ -1,7 +1,7 @@
 export const Setting: {
   CardsCount: number;
 } = {
-  CardsCount: 5
+  CardsCount: 6
 };
 
 export enum AuthorizationStatus {
