@@ -8,6 +8,8 @@ import PrivateRoute from './components/private-route';
 import { AuthorizationStatus } from './const';
 import { DetailedOffer } from './types/detailed-offer';
 import { Review } from './types/review';
+import { useAppSelector } from './hooks';
+import LoadingScreen from './pages/loading-screen';
 
 
 type AppProps = {
@@ -16,7 +18,8 @@ type AppProps = {
 };
 
 function App({detailedOffers, reviews}: AppProps): JSX.Element {
-  return (
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
+  return isOffersDataLoading ? <LoadingScreen /> : (
     <BrowserRouter>
       <Routes>
         <Route path='/'>
