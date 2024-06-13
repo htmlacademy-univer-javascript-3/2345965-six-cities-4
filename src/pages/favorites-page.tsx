@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import FavoritesCard from '../components/favorites-card';
 import { useAppSelector } from '../hooks';
-import Header from '../components/memoized-header';
+import Header from '../components/memoized-header.ts';
 import { CITIES } from '../const';
 import { getFavorites, getIsFavoritesLoading } from '../store';
 import LoadingScreen from './loading-screen';

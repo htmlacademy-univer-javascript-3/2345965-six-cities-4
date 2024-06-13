@@ -8,6 +8,14 @@ import {
   setReviewsErrorStatus,
 } from '../store';
 
+const MIN_REVIEW_LENGTH = 50;
+const INITIAL_RATING = 0;
+
+type Review = {
+  text: string;
+  rating: number;
+};
+
 type CommentFromProps = {
   id: string;
 };
@@ -18,19 +26,16 @@ function CommentForm({ id }: CommentFromProps): JSX.Element {
   const isLoading = useAppSelector(getIsReviewsStatusSubmitting);
   const reviewsStatus = useAppSelector(getReviewsHasError);
 
-  const [review, setReview] = useState({
+  const [review, setReview] = useState<Review>({
     text: '',
-    rating: 0
+    rating: INITIAL_RATING,
   });
 
   const [valid, setValid] = useState(false);
   const disabledSubmitButton = !valid || isLoading;
 
   const validateForm = (comment: string, newRating: number) => {
-    const isValid = (
-      comment.length >= 50 &&
-      newRating !== 0
-    );
+    const isValid = comment.length >= MIN_REVIEW_LENGTH && newRating !== INITIAL_RATING;
     setValid(isValid);
   };
 
@@ -38,7 +43,7 @@ function CommentForm({ id }: CommentFromProps): JSX.Element {
     setValid(false);
     setReview({
       text: '',
-      rating: 0
+      rating: INITIAL_RATING,
     });
   };
 
@@ -51,13 +56,13 @@ function CommentForm({ id }: CommentFromProps): JSX.Element {
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newRating = Number(evt.target.value);
-    setReview({...review, rating: newRating});
+    setReview((prevReview) => ({ ...prevReview, rating: newRating }));
     validateForm(review.text, newRating);
   };
 
   const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = evt.target.value;
-    setReview({...review, text: newText});
+    setReview((prevReview) => ({ ...prevReview, text: newText }));
     validateForm(newText, review.rating);
   };
 
@@ -109,7 +114,7 @@ function CommentForm({ id }: CommentFromProps): JSX.Element {
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_REVIEW_LENGTH} characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={disabledSubmitButton}>Submit</button>
       </div>

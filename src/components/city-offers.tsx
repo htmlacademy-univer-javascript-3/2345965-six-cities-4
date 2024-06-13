@@ -1,7 +1,7 @@
 import { City } from '../types/city';
 import { Offer } from '../types/offer';
-import OffersSorting from '../components/memoized-offers-sorting';
-import OffersList from '../components/memoized-offers-list';
+import OffersSorting from './memoized-offers-sorting.ts';
+import OffersList from './memoized-offers-list.ts';
 import Map from '../components/map';
 import { useCallback, useState } from 'react';
 
