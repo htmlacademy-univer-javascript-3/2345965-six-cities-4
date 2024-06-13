@@ -6,7 +6,7 @@ import OfferPage from './pages/offer-page/offer-page';
 import Page404 from './pages/page404/page404';
 import PrivateRoute from './components/private-route/private-route';
 import { AuthorizationStatus } from './const';
-import { Offer } from './types/offers';
+import { Offer } from './types/offer';
 
 
 type AppProps = {
