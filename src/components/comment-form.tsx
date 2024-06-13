@@ -9,6 +9,7 @@ import {
 } from '../store';
 
 const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 300;
 const INITIAL_RATING = 0;
 
 type Review = {
@@ -35,7 +36,9 @@ function CommentForm({ id }: CommentFromProps): JSX.Element {
   const disabledSubmitButton = !valid || isLoading;
 
   const validateForm = (comment: string, newRating: number) => {
-    const isValid = comment.length >= MIN_REVIEW_LENGTH && newRating !== INITIAL_RATING;
+    const isValid = comment.length >= MIN_REVIEW_LENGTH
+      && comment.length <= MAX_REVIEW_LENGTH
+      && newRating !== INITIAL_RATING;
     setValid(isValid);
   };
 
@@ -51,10 +54,13 @@ function CommentForm({ id }: CommentFromProps): JSX.Element {
     if (reviewsStatus === LoadingStatus.Success) {
       resetForm();
       dispatch(setReviewsErrorStatus(LoadingStatus.Idle));
+    } else {
+      dispatch(setReviewsErrorStatus(LoadingStatus.Error));
     }
   }, [reviewsStatus, dispatch]);
 
-  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleRatingChange = (evt: any) => {
+    console.log(1);
     const newRating = Number(evt.target.value);
     setReview((prevReview) => ({ ...prevReview, rating: newRating }));
     validateForm(review.text, newRating);
