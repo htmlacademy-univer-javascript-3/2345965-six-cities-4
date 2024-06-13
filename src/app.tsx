@@ -5,26 +5,28 @@ import FavoritesPage from './pages/favorites-page/favorites-page';
 import OfferPage from './pages/offer-page/offer-page';
 import Page404 from './pages/page404/page404';
 import PrivateRoute from './components/private-route/private-route';
-import { AuthorizationStatus, Offers } from './const';
+import { AuthorizationStatus } from './const';
+import { Offer } from './types/offers';
 
 
 type AppProps = {
   cardsCount: number;
+  offers: Offer[];
 };
 
-function App({cardsCount}: AppProps): JSX.Element {
+function App({cardsCount, offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/'>
-          <Route index element={<MainPage cardsCount = {cardsCount} />} />
+          <Route index element={<MainPage cardsCount = {cardsCount} offers={offers} />} />
           <Route path='login' element={<LoginPage />} />
-          <Route path='offer/:id' element={<OfferPage offers={Offers} />} />
+          <Route path='offer/:id' element={<OfferPage offers={offers} />} />
           <Route
             path='favorites'
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <FavoritesPage cardsCount = {cardsCount} />
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <FavoritesPage offers={offers} />
               </PrivateRoute>
             }
           />

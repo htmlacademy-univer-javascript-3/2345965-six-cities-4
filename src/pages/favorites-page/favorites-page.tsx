@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import FavoritesCard from '../../components/favorites-card/favorites-card';
 import HeaderLogo from '../../components/header-logo/header-logo';
+import { Offer } from '../../types/offers';
 
 type FavoriteProps = {
-  cardsCount: number;
+  offers: Offer[];
 };
 
-function FavoritesPage({cardsCount}: FavoriteProps): JSX.Element {
+function FavoritesPage({offers}: FavoriteProps): JSX.Element {
   const favoriteCards: JSX.Element[] = [];
-  for (let i = 0; i < cardsCount; i++) {
-    favoriteCards.push(<FavoritesCard />);
-  }
+  offers.forEach((offer) => favoriteCards.push(<FavoritesCard offerData={offer} />));
+
   return (
     <div className="page">
       <header className="header">

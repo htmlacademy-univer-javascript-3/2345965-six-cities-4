@@ -7,11 +7,9 @@ type PrivateRouteProps = {
 }
 
 function PrivateRoute(props: PrivateRouteProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const {authorizationStatus, children} = props;
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     authorizationStatus === AuthorizationStatus.Auth
       ? children
       : <Navigate to={'/login'} />
