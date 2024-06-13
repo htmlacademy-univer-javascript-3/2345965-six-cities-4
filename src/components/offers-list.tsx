@@ -3,11 +3,10 @@ import Card from './card';
 import { useState } from 'react';
 
 type OffersListProps = {
-  cardsCount: number;
   offers: Offer[];
 };
 
-function OffersList({cardsCount, offers}: OffersListProps): JSX.Element {
+function OffersList({offers}: OffersListProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState(offers[0]);
 
   const handleMouseOver = (id: string) => {
@@ -19,7 +18,7 @@ function OffersList({cardsCount, offers}: OffersListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.slice(0, cardsCount).map((offer) => (
+      {offers.map((offer) => (
         <Card key={offer.id} onMouseOver={handleMouseOver} offerData={offer} />
       ))}
     </div>
