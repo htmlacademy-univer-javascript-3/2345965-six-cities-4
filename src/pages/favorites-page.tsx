@@ -1,15 +1,11 @@
 import { Link } from 'react-router-dom';
-import FavoritesCard from '../../components/favorites-card';
-import HeaderLogo from '../../components/header-logo';
-import { Offer } from '../../types/offer';
+import FavoritesCard from '../components/favorites-card';
+import HeaderLogo from '../components/header-logo';
+import { Offer } from '../types/offer';
+import { useAppSelector } from '../hooks';
 
-type FavoriteProps = {
-  offers: Offer[];
-};
-
-function FavoritesPage({offers}: FavoriteProps): JSX.Element {
-  const favoriteCards: JSX.Element[] = [];
-  offers.forEach((offer) => favoriteCards.push(<FavoritesCard offerData={offer} />));
+function FavoritesPage(): JSX.Element {
+  const offers: Offer[] = useAppSelector((state) => state.offers);
 
   return (
     <div className="page">
@@ -22,11 +18,11 @@ function FavoritesPage({offers}: FavoriteProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="#todo">
+                  <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{offers.length}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">
@@ -54,7 +50,9 @@ function FavoritesPage({offers}: FavoriteProps): JSX.Element {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {favoriteCards}
+                  {offers.map((offer) => (
+                    <FavoritesCard key={offer.id} offerData={offer} />
+                  ))}
                 </div>
               </li>
             </ul>

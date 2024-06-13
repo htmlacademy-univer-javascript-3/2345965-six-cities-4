@@ -1,24 +1,28 @@
 import { Link, useParams } from 'react-router-dom';
-import HeaderLogo from '../../components/header-logo';
-import Page404 from '../page404/page404';
-import CommentForm from '../../components/comment-form';
-import { DetailedOffer } from '../../types/detailed-offer';
-import ReviewList from '../../components/review-list';
-import { Review } from '../../types/review';
-import Map from '../../components/map';
-import { Offer } from '../../types/offer';
-import OffersList from '../../components/offers-list';
+import HeaderLogo from '../components/header-logo';
+import Page404 from './page404';
+import CommentForm from '../components/comment-form';
+import { DetailedOffer } from '../types/detailed-offer';
+import ReviewList from '../components/review-list';
+import { Review } from '../types/review';
+import Map from '../components/map';
+import OffersList from '../components/offers-list';
+import { useAppSelector } from '../hooks';
+import { Offer } from '../types/offer';
 
 type OfferProps = {
-  offers: Offer[];
   detailedOffers: DetailedOffer[];
   reviews: Review[];
 };
 
-function OfferPage({offers, detailedOffers, reviews}: OfferProps): JSX.Element {
+function OfferPage({detailedOffers, reviews}: OfferProps): JSX.Element {
   const params = useParams();
   const currentDetailedOffer = detailedOffers.find((offer) => offer.id === params.id);
-  const offersAmsterdam = offers.filter((offer) => offer.city.name === 'Amsterdam');
+
+  const offers: Offer[] = useAppSelector((state) => state.offers);
+  const city = useAppSelector((state) => state.city);
+
+  const nearestOffers = offers.filter((offer) => offer.city.name === city.name).slice(0, 3);
 
   const premiumBlock = (
     <div className="offer__mark">
@@ -149,8 +153,8 @@ function OfferPage({offers, detailedOffers, reviews}: OfferProps): JSX.Element {
           </div>
           <section className="offer__map map">
             <Map
-              city={offersAmsterdam[0].city}
-              points={offersAmsterdam.slice(0, 3).map((offer) => offer.location)}
+              city={city}
+              points={nearestOffers.map((offer) => offer.location)}
               selectedPoint={currentDetailedOffer.location}
             />
           </section>
@@ -159,7 +163,7 @@ function OfferPage({offers, detailedOffers, reviews}: OfferProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList cardsCount={3} offers={offersAmsterdam} />
+              <OffersList offers={nearestOffers} />
             </div>
           </section>
         </div>
