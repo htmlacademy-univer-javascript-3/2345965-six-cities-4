@@ -4,24 +4,28 @@ import LoginPage from './pages/login-page/login-page';
 import FavoritesPage from './pages/favorites-page/favorites-page';
 import OfferPage from './pages/offer-page/offer-page';
 import Page404 from './pages/page404/page404';
-import PrivateRoute from './components/private-route/private-route';
+import PrivateRoute from './components/private-route';
 import { AuthorizationStatus } from './const';
 import { Offer } from './types/offer';
+import { DetailedOffer } from './types/detailed-offer';
+import { Review } from './types/review';
 
 
 type AppProps = {
   cardsCount: number;
   offers: Offer[];
+  detailedOffers: DetailedOffer[];
+  reviews: Review[];
 };
 
-function App({cardsCount, offers}: AppProps): JSX.Element {
+function App({cardsCount, offers, detailedOffers, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/'>
           <Route index element={<MainPage cardsCount = {cardsCount} offers={offers} />} />
           <Route path='login' element={<LoginPage />} />
-          <Route path='offer/:id' element={<OfferPage offers={offers} />} />
+          <Route path='offer/:id' element={<OfferPage offers={offers} detailedOffers={detailedOffers} reviews={reviews} />} />
           <Route
             path='favorites'
             element={

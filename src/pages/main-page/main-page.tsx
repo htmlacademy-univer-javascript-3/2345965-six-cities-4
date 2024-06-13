@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import OffersList from '../../components/offers-list/offers-list';
-import HeaderLogo from '../../components/header-logo/header-logo';
+import OffersList from '../../components/offers-list';
+import HeaderLogo from '../../components/header-logo';
 import { Offer } from '../../types/offer';
 import Map from '../../components/map';
 

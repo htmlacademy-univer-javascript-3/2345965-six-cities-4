@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import leaflet from 'leaflet';
+import { useEffect, useRef } from 'react';
+import { Marker } from 'leaflet';
 import useMap from '../hooks/use-map';
 import { City } from '../types/city';
 import 'leaflet/dist/leaflet.css';
@@ -13,23 +13,34 @@ type MapProps = {
 
 function Map({city, points, selectedPoint}: MapProps): JSX.Element {
 
-  const mapRef = React.useRef(null);
+  const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const markersRef = useRef<Marker[]>([]);
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
-        leaflet
-          .marker({
+      markersRef.current.forEach((marker) => map.removeLayer(marker));
+      markersRef.current = [];
+
+      points
+        .filter((point) => point !== selectedPoint)
+        .forEach((point) => {
+          const marker = new Marker({
             lat: point.latitude,
             lng: point.longitude,
-          })
-          .addTo(map);
-      });
+          }).addTo(map);
+          markersRef.current.push(marker);
+        });
+
       if (selectedPoint) {
+        const selectedMarker = new Marker({
+          lat: selectedPoint.latitude,
+          lng: selectedPoint.longitude,
+        }).addTo(map);
+        markersRef.current.push(selectedMarker);
         map.setView({
           lat: selectedPoint.latitude,
-          lng: selectedPoint.latitude
+          lng: selectedPoint.longitude
         }, selectedPoint.zoom);
       }
     }
