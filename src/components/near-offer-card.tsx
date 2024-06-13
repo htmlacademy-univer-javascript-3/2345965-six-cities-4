@@ -1,29 +1,27 @@
 import { Offer } from '../types/offer';
 import { Link } from 'react-router-dom';
 import { formatRating } from '../utils';
-import { PointLocation } from '../types/point-location';
+import { useAppDispatch } from '../hooks';
+import { setSelectedOffer } from '../store/action';
 
-type CardProps = {
+type NearOfferCardProps = {
   offer: Offer;
-  onMouseOver: (point: PointLocation | null) => void;
 };
 
-function Card({offer, onMouseOver: handlePointLocationChange}: CardProps): JSX.Element {
+function NearOfferCard({offer}: NearOfferCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
     <article
-      onMouseOver={(evt) => {
+      onClick={(evt) => {
         evt.preventDefault();
-        handlePointLocationChange(offer.location);
+        dispatch(setSelectedOffer(offer));
       }}
-      onMouseLeave={(evt) => {
-        evt.preventDefault();
-        handlePointLocationChange(null);
-      }}
-      className="cities__card place-card"
+      className="near-places__card place-card"
     >
       <Link to={`/offer/${offer.id}`}>
         {offer.isPremium && <div className="place-card__mark"> <span>Premium</span> </div>}
         <div className="cities__image-wrapper place-card__image-wrapper">
+
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
         </div>
         <div className="place-card__info">
@@ -55,4 +53,4 @@ function Card({offer, onMouseOver: handlePointLocationChange}: CardProps): JSX.E
   );
 }
 
-export default Card;
+export default NearOfferCard;

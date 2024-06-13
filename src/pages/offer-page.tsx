@@ -6,9 +6,9 @@ import { DetailedOffer } from '../types/detailed-offer';
 import ReviewList from '../components/review-list';
 import { Review } from '../types/review';
 import Map from '../components/map';
-import OffersList from '../components/offers-list';
 import { useAppSelector } from '../hooks';
 import { Offer } from '../types/offer';
+import NearOffersList from '../components/near-offers-list';
 
 type OfferProps = {
   detailedOffers: DetailedOffer[];
@@ -160,12 +160,7 @@ function OfferPage({detailedOffers, reviews}: OfferProps): JSX.Element {
           </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <OffersList offers={nearestOffers} />
-            </div>
-          </section>
+          <NearOffersList offers={nearestOffers} />
         </div>
       </main>
     </div>
