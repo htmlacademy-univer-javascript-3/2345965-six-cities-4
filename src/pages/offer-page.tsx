@@ -5,7 +5,7 @@ import ReviewList from '../components/review-list';
 import Map from '../components/map';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import NearOffersList from '../components/near-offers-list';
-import Header from '../components/header';
+import Header from '../components/memoized-header';
 import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction, getAuthCheckedStatus, getIsNearbyOffersLoading, getIsOfferLoading, getIsReviewsLoading, getNearbyOffers, getOffer, getReviews } from '../store';
 import { useEffect } from 'react';
 import LoadingScreen from './loading-screen';

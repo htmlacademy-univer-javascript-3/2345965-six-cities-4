@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import HeaderLogo from './header-logo';
 import { getAuthCheckedStatus, getFavoritesCount, getUserInfo, logoutAction } from '../store';
-import { memo } from 'react';
 
 function Header(): JSX.Element {
 
@@ -61,6 +60,4 @@ function Header(): JSX.Element {
   );
 }
 
-const memoizedHeader = memo(Header);
-
-export default memoizedHeader;
+export default Header;
