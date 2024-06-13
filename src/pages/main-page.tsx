@@ -6,16 +6,23 @@ import Map from '../components/map';
 import { useAppSelector } from '../hooks';
 import { useEffect, useState } from 'react';
 import CitiesList from '../components/cities-list';
+import OffersSorting from '../components/offers-sorting';
+import { PointLocation } from '../types/point-location';
 
 function MainPage(): JSX.Element {
   const offers: Offer[] = useAppSelector((state) => state.offers);
   const city = useAppSelector((state) => state.city);
   const [currentCityOffers, setCurrentCityOffers] = useState<Offer[]>(offers);
+  const [selectedOfferLocation, setSelectedOfferLocation] = useState<PointLocation | null>(null);
 
   useEffect(() => {
     const filteredOffers = offers.filter((offer) => offer.city.name === city.name);
     setCurrentCityOffers(filteredOffers);
   }, [city, offers]);
+
+  const handlePointLocationChange = (point: PointLocation | null) => {
+    setSelectedOfferLocation(point);
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -58,28 +65,15 @@ function MainPage(): JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{currentCityOffers.length} places to stay in {city.name}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by </span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              <OffersList offers={currentCityOffers} />
+              <OffersSorting />
+              <OffersList offers={currentCityOffers} onMouseOver={handlePointLocationChange} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
                   points={currentCityOffers.map((offer) => offer.location)}
                   city={city}
+                  selectedPoint={selectedOfferLocation}
                 />
               </section>
             </div>
