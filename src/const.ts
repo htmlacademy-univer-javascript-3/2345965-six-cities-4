@@ -1,5 +1,3 @@
-import { City } from './types/city';
-
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -13,8 +11,8 @@ export enum SORT_TYPES {
   TopRatedFirst = 'Top rated first',
 }
 
-export const CITIES: City[] = [
-  {
+export const CITIES = {
+  Paris: {
     name: 'Paris',
     location: {
       latitude: 48.85661,
@@ -22,7 +20,7 @@ export const CITIES: City[] = [
       zoom: 13
     }
   },
-  {
+  Cologne: {
     name: 'Cologne',
     location: {
       latitude: 50.938361,
@@ -30,7 +28,7 @@ export const CITIES: City[] = [
       zoom: 13
     }
   },
-  {
+  Brussels: {
     name: 'Brussels',
     location: {
       latitude: 50.846557,
@@ -38,7 +36,7 @@ export const CITIES: City[] = [
       zoom: 13
     }
   },
-  {
+  Amsterdam: {
     name: 'Amsterdam',
     location: {
       latitude: 52.37454,
@@ -46,7 +44,7 @@ export const CITIES: City[] = [
       zoom: 13
     }
   },
-  {
+  Hamburg: {
     name: 'Hamburg',
     location: {
       latitude: 53.550341,
@@ -54,7 +52,7 @@ export const CITIES: City[] = [
       zoom: 13
     }
   },
-  {
+  Dusseldorf: {
     name: 'Dusseldorf',
     location: {
       latitude: 51.225402,
@@ -62,4 +60,12 @@ export const CITIES: City[] = [
       zoom: 13
     }
   }
-];
+};
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export const TIMEOUT_SHOW_ERROR = 2000;

@@ -11,7 +11,7 @@ function CitiesList(): JSX.Element {
   };
   return (
     <ul className="locations__list tabs__list">
-      {CITIES.map((city) => (
+      {Object.values(CITIES).map((city) => (
         <CitiesElement
           key={city.name}
           city={city}
