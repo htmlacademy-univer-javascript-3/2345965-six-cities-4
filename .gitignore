@@ -25,3 +25,7 @@ yarn-error.log*
 *.sublime*
 .vscode
 .vite
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
