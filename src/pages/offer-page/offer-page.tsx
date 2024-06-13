@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import HeaderLogo from '../../components/header-logo/header-logo';
 import Page404 from '../page404/page404';
-import { Offer } from '../../types/offers';
+import { Offer } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 
 type OfferProps = {
