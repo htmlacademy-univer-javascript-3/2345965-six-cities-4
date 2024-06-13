@@ -1,15 +1,18 @@
 import { createAction } from '@reduxjs/toolkit';
+import { AuthorizationStatus } from '../const';
 import { City } from '../types/city';
 import { Offer } from '../types/offer';
 
-export const changeCity = createAction<City>('CHANGE_CITY');
+export const changeCity = createAction<City>('changeCity');
 
-export const loadOffers = createAction<Offer[]>('LOAD_OFFERS');
+export const loadOffers = createAction<Offer[]>('loadOffers');
 
-export const setSelectedOffer = createAction<Offer | null>('SELECT_OFFER');
+export const setSelectedOffer = createAction<Offer | null>('selectOffer');
 
-export const setSortType = createAction<string>('SET_SORT_TYPE');
+export const setSortType = createAction<string>('setSortType');
 
-export const setLoadingStatus = createAction<boolean>('SET_LOADING_STATUS');
+export const setLoadingStatus = createAction<boolean>('setLoadingStatus');
 
-export const setError = createAction<string | null>('SET_ERROR');
+export const setError = createAction<string | null>('setError');
+
+export const setAuthorizationStatus = createAction<AuthorizationStatus>('setAuthorizationStatus');
