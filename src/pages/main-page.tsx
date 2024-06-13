@@ -3,12 +3,14 @@ import CityOffers from '../components/city-offers';
 import { getOffers, getSelectedCity } from '../store';
 import CitiesList from '../components/cities-list';
 import { useAppSelector } from '../hooks';
+import { useMemo } from 'react';
 
 function MainPage(): JSX.Element {
   const selectedCity = useAppSelector(getSelectedCity);
   const offers = useAppSelector(getOffers);
-  const currentCityOffers = offers.filter(
-    (offer) => offer.city.name === selectedCity.name
+  const currentCityOffers = useMemo(
+    () => offers.filter((offer) => offer.city.name === selectedCity.name),
+    [offers, selectedCity]
   );
 
   return (
