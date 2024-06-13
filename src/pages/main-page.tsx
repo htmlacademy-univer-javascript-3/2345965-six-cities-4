@@ -1,18 +1,22 @@
 import OffersList from '../components/offers-list';
 import { Offer } from '../types/offer';
 import Map from '../components/map';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { useEffect, useState } from 'react';
 import CitiesList from '../components/cities-list';
 import OffersSorting from '../components/offers-sorting';
 import { PointLocation } from '../types/point-location';
 import Header from '../components/header';
+import { clearOfferPageData } from '../store/action';
 
 function MainPage(): JSX.Element {
   const offers: Offer[] = useAppSelector((state) => state.offers);
   const city = useAppSelector((state) => state.city);
   const [currentCityOffers, setCurrentCityOffers] = useState<Offer[]>(offers);
   const [selectedOfferLocation, setSelectedOfferLocation] = useState<PointLocation | null>(null);
+
+  const dispatch = useAppDispatch();
+  dispatch(clearOfferPageData());
 
   useEffect(() => {
     const filteredOffers = offers.filter((offer) => offer.city.name === city.name);

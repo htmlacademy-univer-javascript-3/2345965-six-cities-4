@@ -6,11 +6,15 @@ import {
   setSortType,
   setLoadingStatus,
   setError,
-  setAuthorizationStatus
+  setAuthorizationStatus,
+  loadOfferPageData,
+  clearOfferPageData,
+  addReview
 } from './action';
 import { CITIES, SORT_TYPES, AuthorizationStatus } from '../const';
 import { City } from '../types/city';
 import { Offer } from '../types/offer';
+import { OfferPageData } from '../types/offer-page-data';
 
 type InitialState = {
   city: City;
@@ -20,6 +24,7 @@ type InitialState = {
   isOffersLoading: boolean;
   error: string | null;
   authorizationStatus: AuthorizationStatus;
+  offerPageData: OfferPageData;
 }
 
 const initialState: InitialState = {
@@ -30,6 +35,11 @@ const initialState: InitialState = {
   isOffersLoading: false,
   error: null,
   authorizationStatus: AuthorizationStatus.Unknown,
+  offerPageData: {
+    detailedOffer: null,
+    nearestOffers: [],
+    reviews: []
+  },
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -54,6 +64,19 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(loadOfferPageData, (state, action) => {
+      state.offerPageData = action.payload;
+    })
+    .addCase(clearOfferPageData, (state) => {
+      state.offerPageData = {
+        detailedOffer: null,
+        nearestOffers: [],
+        reviews: []
+      };
+    })
+    .addCase(addReview, (state, action) => {
+      state.offerPageData.reviews = [...state.offerPageData.reviews, action.payload];
     });
 });
 
