@@ -1,6 +1,12 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import axios, {
+  AxiosInstance,
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig
+} from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { processErrorHandle } from './process-error-handle';
+import {getToken} from './token';
 
 type DetailMessageType = {
   type: string;
@@ -34,6 +40,18 @@ export const createAPI = (): AxiosInstance => {
       }
 
       throw error;
+    }
+  );
+
+  api.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+      const token = getToken();
+
+      if (token && config.headers) {
+        config.headers['x-token'] = token;
+      }
+
+      return config;
     }
   );
 
