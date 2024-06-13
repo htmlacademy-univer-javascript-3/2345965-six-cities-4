@@ -1,8 +1,3 @@
-
-const spanStyle80 = {
-  width: '80%',
-};
-
 function Card(): JSX.Element {
   return (
     <article className="cities__card place-card">
@@ -29,7 +24,7 @@ function Card(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={spanStyle80}></span>
+            <span style={{width: '80%'}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

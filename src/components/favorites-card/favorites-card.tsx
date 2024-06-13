@@ -1,8 +1,3 @@
-
-const spanStyle100 = {
-  width: '100%',
-};
-
 function FavoritesCard(): JSX.Element {
   return (
     <article className="favorites__card place-card">
@@ -29,7 +24,7 @@ function FavoritesCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={spanStyle100}></span>
+            <span style={{width: '100%'}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
