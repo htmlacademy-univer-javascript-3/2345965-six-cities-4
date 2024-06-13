@@ -1,4 +1,5 @@
 import { useAppSelector } from '../hooks';
+import { getSelectedCity } from '../store';
 import { City } from '../types/city';
 
 type CitiesElementProps = {
@@ -16,7 +17,7 @@ function CitiesElement ({city, onCityChange}: CitiesElementProps): JSX.Element {
       <a className={
         `locations__item-link
         tabs__item
-        ${useAppSelector((state) => state.city) === city ? 'tabs__item--active' : ''}`
+        ${useAppSelector(getSelectedCity) === city ? 'tabs__item--active' : ''}`
       } href="#"
       >
         <span>{city.name}</span>

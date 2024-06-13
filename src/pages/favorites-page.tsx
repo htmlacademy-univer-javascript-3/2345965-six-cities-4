@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
 import FavoritesCard from '../components/favorites-card';
-import { Offer } from '../types/offer';
 import { useAppSelector } from '../hooks';
 import Header from '../components/header';
 import { CITIES } from '../const';
+import { getFavorites, getIsFavoritesLoading } from '../store';
+import LoadingScreen from './loading-screen';
 
 function FavoritesPage(): JSX.Element {
-  const offers: Offer[] = useAppSelector((state) => state.offers);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
+  const favoriteOffers = useAppSelector(getFavorites);
 
-  return (
+  return isFavoritesLoading ? <LoadingScreen /> : (
     <div className="page">
       <Header />
       <main className="page__main page__main--favorites">
@@ -21,7 +22,7 @@ function FavoritesPage(): JSX.Element {
                 {Object.values(CITIES).map((city) => {
                   const cityOffers = favoriteOffers.filter((offer) => offer.city.name === city.name);
                   return (cityOffers.length !== 0) && (
-                    <li className="favorites__locations-items">
+                    <li className="favorites__locations-items" key={city.name}>
                       <div className="favorites__locations locations locations--current">
                         <div className="locations__item">
                           <Link className="locations__item-link" to="/">

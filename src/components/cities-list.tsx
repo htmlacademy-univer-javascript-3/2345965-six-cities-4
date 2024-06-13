@@ -1,6 +1,6 @@
 import { CITIES } from '../const';
 import { useAppDispatch } from '../hooks';
-import { changeCity } from '../store/action';
+import { changeCity } from '../store';
 import { City } from '../types/city';
 import CitiesElement from './cities-element';
 

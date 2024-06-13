@@ -4,6 +4,6 @@ import { DetailedOffer } from './detailed-offer';
 
 export type OfferPageData = {
   detailedOffer: DetailedOffer | null;
-  nearestOffers: Offer[];
+  nearbyOffers: Offer[];
   reviews: Review[];
 }

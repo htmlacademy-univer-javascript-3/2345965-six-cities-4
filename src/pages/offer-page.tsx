@@ -6,37 +6,40 @@ import Map from '../components/map';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import NearOffersList from '../components/near-offers-list';
 import Header from '../components/header';
-import { fetchOfferPageDataAction } from '../store/api-actions';
+import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction, getAuthCheckedStatus, getIsNearbyOffersLoading, getIsOfferLoading, getIsReviewsLoading, getNearbyOffers, getOffer, getReviews } from '../store';
 import { useEffect } from 'react';
 import LoadingScreen from './loading-screen';
-import { AuthorizationStatus } from '../const';
+import FavoriteButton from '../components/favorite-button';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
+  const reviews = useAppSelector(getReviews);
+  const detailedOffer = useAppSelector(getOffer);
+  const nearbyList = useAppSelector(getNearbyOffers);
+  const isAuthed = useAppSelector(getAuthCheckedStatus);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const isReviewsLoading = useAppSelector(getIsReviewsLoading);
+  const isNearbyOffersLoading = useAppSelector(getIsNearbyOffersLoading);
+
+  const isAllLoading = isOfferLoading || isNearbyOffersLoading || isReviewsLoading;
+
+  const nearbyOffers = nearbyList.slice(0, 3);
+
   useEffect(() => {
-    dispatch(fetchOfferPageDataAction({ id: id ?? '' }));
-  }, [id, dispatch]);
+    if (id) {
+      dispatch(fetchOfferAction(id));
+      dispatch(fetchReviewsAction(id));
+      dispatch(fetchNearbyAction(id));
+    }
+  }, [dispatch, id]);
 
-  const isOfferExist = useAppSelector((state) => state.offers).find((offer) => offer.id === id);
-  const { detailedOffer, nearestOffers, reviews } = useAppSelector(
-    ({ offerPageData }) => ({
-      detailedOffer: offerPageData.detailedOffer,
-      nearestOffers: offerPageData.nearestOffers,
-      reviews: offerPageData.reviews,
-    })
-  );
-  const city = useAppSelector((state) => state.city);
-
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isAuthed = (authorizationStatus === AuthorizationStatus.Auth);
-
-  if (!isOfferExist) {
+  if (!detailedOffer) {
     return <Page404 />;
   }
 
-  return detailedOffer ? (
+  return isAllLoading ? <LoadingScreen /> : (
     <div className="page">
       <Header />
       <main className="page__main page__main--offer">
@@ -61,12 +64,15 @@ function OfferPage(): JSX.Element {
                 <h1 className="offer__name">
                   {detailedOffer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton
+                  isFavorite={detailedOffer.isFavorite}
+                  id={detailedOffer.id}
+                  width="31"
+                  height="33"
+                  buttonClass="offer__bookmark-button"
+                  activeClass="offer__bookmark-button--active"
+                  iconClass="offer__bookmark-icon"
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -130,18 +136,18 @@ function OfferPage(): JSX.Element {
           </div>
           <section className="offer__map map">
             <Map
-              city={city}
-              points={nearestOffers.slice(0, 3).map((offer) => offer.location)}
-              selectedPoint={detailedOffer.location}
+              city={nearbyOffers[0].city}
+              points={nearbyOffers}
+              selectedPoint={detailedOffer}
             />
           </section>
         </section>
         <div className="container">
-          <NearOffersList offers={nearestOffers.slice(0, 3)} />
+          <NearOffersList offers={nearbyOffers.slice(0, 3)} />
         </div>
       </main>
     </div>
-  ) : <LoadingScreen />;
+  );
 }
 
 export default OfferPage;

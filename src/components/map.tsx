@@ -3,12 +3,13 @@ import { Icon, Marker } from 'leaflet';
 import useMap from '../hooks/use-map';
 import { City } from '../types/city';
 import 'leaflet/dist/leaflet.css';
-import { PointLocation } from '../types/point-location';
+import { Offer } from '../types/offer';
+import { DetailedOffer } from '../types/detailed-offer';
 
 type MapProps = {
   city: City;
-  points: PointLocation[];
-  selectedPoint: PointLocation | null;
+  points: Offer[];
+  selectedPoint: Offer | DetailedOffer | null;
 }
 
 function Map({city, points, selectedPoint}: MapProps): JSX.Element {
@@ -37,22 +38,22 @@ function Map({city, points, selectedPoint}: MapProps): JSX.Element {
         .filter((point) => point !== selectedPoint)
         .forEach((point) => {
           const marker = new Marker({
-            lat: point.latitude,
-            lng: point.longitude,
+            lat: point.location.latitude,
+            lng: point.location.longitude,
           }, {icon: defaultIcon}).addTo(map);
           markersRef.current.push(marker);
         });
 
       if (selectedPoint) {
         const selectedMarker = new Marker({
-          lat: selectedPoint.latitude,
-          lng: selectedPoint.longitude,
+          lat: selectedPoint.location.latitude,
+          lng: selectedPoint.location.longitude,
         }, {icon: activeIcon}).addTo(map);
         markersRef.current.push(selectedMarker);
         map.setView({
-          lat: selectedPoint.latitude,
-          lng: selectedPoint.longitude
-        }, selectedPoint.zoom);
+          lat: selectedPoint.location.latitude,
+          lng: selectedPoint.location.longitude
+        }, selectedPoint.location.zoom);
       }
     }
 

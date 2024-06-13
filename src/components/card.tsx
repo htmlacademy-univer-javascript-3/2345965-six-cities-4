@@ -1,11 +1,11 @@
 import { Offer } from '../types/offer';
 import { Link } from 'react-router-dom';
 import { formatRating } from '../utils';
-import { PointLocation } from '../types/point-location';
+import FavoriteButton from './favorite-button';
 
 type CardProps = {
   offer: Offer;
-  onMouseOver: (point: PointLocation | null) => void;
+  onMouseOver: (point: Offer | null) => void;
 };
 
 function Card({offer, onMouseOver: handlePointLocationChange}: CardProps): JSX.Element {
@@ -13,7 +13,7 @@ function Card({offer, onMouseOver: handlePointLocationChange}: CardProps): JSX.E
     <article
       onMouseOver={(evt) => {
         evt.preventDefault();
-        handlePointLocationChange(offer.location);
+        handlePointLocationChange(offer);
       }}
       onMouseLeave={(evt) => {
         evt.preventDefault();
@@ -32,12 +32,15 @@ function Card({offer, onMouseOver: handlePointLocationChange}: CardProps): JSX.E
               <b className="place-card__price-value">&euro;{offer.price}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
-            <button className="place-card__bookmark-button button" type="button">
-              <svg className="place-card__bookmark-icon" width="18" height="19">
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <FavoriteButton
+              isFavorite={offer.isFavorite}
+              id={offer.id}
+              width="18"
+              height="19"
+              buttonClass="place-card__bookmark-button"
+              activeClass="place-card__bookmark-button--active"
+              iconClass="place-card__bookmark-icon"
+            />
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
