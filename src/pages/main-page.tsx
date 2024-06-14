@@ -1,7 +1,7 @@
-import Header from '../components/header';
+import Header from '../components/memoized-header.ts';
 import CityOffers from '../components/city-offers';
 import { getOffers, getSelectedCity } from '../store';
-import CitiesList from '../components/cities-list';
+import CitiesList from '../components/memoized-cities-list.ts';
 import { useAppSelector } from '../hooks';
 import { useMemo } from 'react';
 

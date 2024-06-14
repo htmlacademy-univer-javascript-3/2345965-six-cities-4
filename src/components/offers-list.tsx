@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { useAppSelector } from '../hooks';
 import { Offer } from '../types/offer';
 import { sortOffers } from '../utils';
@@ -21,6 +20,4 @@ function OffersList({offers, onMouseOver}: OffersListProps): JSX.Element {
   );
 }
 
-const memoizedOffersList = memo(OffersList);
-
-export default memoizedOffersList;
+export default OffersList;

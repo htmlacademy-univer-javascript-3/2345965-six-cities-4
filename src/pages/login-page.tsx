@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from '../components/header-logo';
 import { FormEvent, useRef } from 'react';
@@ -7,6 +9,9 @@ import { getRandomArrayElement, isPasswordValid } from '../utils';
 import { toast } from 'react-toastify';
 import { CITIES } from '../const';
 import { City } from '../types/city';
+import { getAuthorizationStatus } from '../store/slices/user/selectors';
+import { AuthorizationStatus } from '../const';
+import browserHistory from "../browser-history.ts";
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -18,6 +23,14 @@ function LoginPage(): JSX.Element {
 
   const randomCity = getRandomArrayElement(Object.keys(CITIES));
   const randomCityDetails: City = CITIES[randomCity];
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      browserHistory.push('/');
+    }
+  }, [authorizationStatus, history]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
