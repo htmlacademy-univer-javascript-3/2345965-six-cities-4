@@ -19,9 +19,6 @@ jobs:
     - uses: actions/checkout@master
       name: Checkout
 
-    - name: Clear npm cache
-      run: npm cache clean --force
-
     - name: Install dependencies
       run: npm install
 
