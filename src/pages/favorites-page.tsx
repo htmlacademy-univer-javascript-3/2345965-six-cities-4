@@ -9,9 +9,10 @@ import LoadingScreen from './loading-screen';
 function FavoritesPage(): JSX.Element {
   const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
   const favoriteOffers = useAppSelector(getFavorites);
+  const additionalClassName = favoriteOffers.length ? '' : 'page--favorites-empty';
 
   return isFavoritesLoading ? <LoadingScreen /> : (
-    <div className="page">
+    <div className={`page ${additionalClassName}`}>
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -55,6 +56,7 @@ function FavoritesPage(): JSX.Element {
         <Link className="footer__logo-link" to="/">
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
         </Link>
+        {}
       </footer>
     </div>
   );
