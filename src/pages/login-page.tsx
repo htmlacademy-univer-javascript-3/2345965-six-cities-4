@@ -11,7 +11,7 @@ import { CITIES } from '../const';
 import { City } from '../types/city';
 import { getAuthorizationStatus } from '../store/slices/user/selectors';
 import { AuthorizationStatus } from '../const';
-import browserHistory from "../browser-history.ts";
+import browserHistory from '../browser-history.ts';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -30,7 +30,7 @@ function LoginPage(): JSX.Element {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       browserHistory.push('/');
     }
-  }, [authorizationStatus, history]);
+  }, [authorizationStatus]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

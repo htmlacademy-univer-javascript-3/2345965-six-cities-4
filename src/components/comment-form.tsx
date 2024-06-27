@@ -59,8 +59,7 @@ function CommentForm({ id }: CommentFromProps): JSX.Element {
     }
   }, [reviewsStatus, dispatch]);
 
-  const handleRatingChange = (evt: any) => {
-    console.log(1);
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const newRating = Number(evt.target.value);
     setReview((prevReview) => ({ ...prevReview, rating: newRating }));
     validateForm(review.text, newRating);
