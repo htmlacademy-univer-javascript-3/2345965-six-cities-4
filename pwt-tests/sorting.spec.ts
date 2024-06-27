@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Cортировка карточек по стоимости', async ({ page }) => {
+test('Sorting card by price', async ({ page }) => {
   await page.goto('http://localhost:5173');
   await page.waitForSelector('.cities__card');
 

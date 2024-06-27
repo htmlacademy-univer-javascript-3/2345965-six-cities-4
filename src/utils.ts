@@ -21,7 +21,7 @@ export const sortOffers = (
   }
 };
 
-export const formatRating = (rate: number) => `${(rate / 5) * 100}%`;
+export const formatRating = (rate: number) => `${Math.round(rate) / 5 * 100}%`;
 
 export const isPasswordValid = (password: string): boolean => {
   const hasLetter = /[a-zA-Z]/.test(password);

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Переход на страницу карточки', async ({ page }) => {
+test('Card redirect', async ({ page }) => {
   await page.goto('http://localhost:5173');
 
   await page.waitForSelector('.cities__card');

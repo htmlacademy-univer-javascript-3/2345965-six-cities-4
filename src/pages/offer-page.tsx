@@ -80,7 +80,7 @@ function OfferPage(): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${Math.floor(detailedOffer.rating) / 5 * RATING_MULTIPLIER}%` }}></span>
+                  <span style={{ width: `${Math.round(detailedOffer.rating) / 5 * RATING_MULTIPLIER}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{detailedOffer.rating}</span>
@@ -122,7 +122,7 @@ function OfferPage(): JSX.Element {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewList reviews={sortedReviews} />
-                {isAuthed && <CommentForm id={id!} />}
+                {isAuthed && <CommentForm offerId={id!} />}
               </section>
             </div>
           </div>
