@@ -33,7 +33,7 @@ function FavoritesCard({offerData}: FavoriteCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${offerData.rating / 5 * 100}%`}}></span>
+            <span style={{width: `${Math.round(offerData.rating / 5 * 100)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
